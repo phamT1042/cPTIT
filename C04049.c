@@ -1,37 +1,29 @@
-#include<stdio.h>
-
-int A[1000];
-long long B[1001];
-long long BCNN (int x, int y) {
-	return x * y/ UCLN(x, y);
+#include <stdio.h>
+long long ucln (int a, int b) {
+    if (b == 0) return a;
+    return ucln (b, a % b);
 }
-long long UCLN (int x, int y) {
-	while(x * y != 0) {
-		if(x > y) x %= y;
-		else y %= x;
-	}
-	return x + y;
+long long bcnn (int a, int b) {
+    return (a * b) / ucln(a, b);
 }
 int main() {
-	int T, i, N, j, start;
-	scanf("%d", &T);
-	while(T--) {
-		scanf("%d", &N);
-		for(i = 0; i < N; i++) {
-			scanf("%d", &A[i]);
-		}
-		j = 0;
-		start = 1;
-		for(i = 0; i < N; i++) {
-			B[j]= BCNN(start, A[i]);
-			start = A[i];
-			j++;
-		}
-		B[N] = A[N-1];
-		for(i = 0; i <= N; i++) {
-			printf("%lld ", B[i]);
-		}
-		printf("\n");
-	}
+	int t; scanf("%d", &t);
+    while (t--) {
+        int n; scanf("%d", &n);
+        int a[n];
+        long long b[n + 1];
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+        b[0] = a[0];
+        b[n] = a[n - 1];
+        for (int i = 1; i < n; i++) {
+            b[i] = bcnn (a[i - 1], a[i]);
+        }
+        for (int i = 0; i <= n; i++) {
+            printf("%lld ", b[i]);
+        }
+        printf("\n");
+    }
 	return 0;
 }
